@@ -25,7 +25,7 @@ class Category(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Product(models.Model):
@@ -34,7 +34,7 @@ class Product(models.Model):
         Category,
         on_delete=models.CASCADE,
         related_name='products',
-        verbose_name=_("التصنيف المرتبط"),
+        verbose_name=_("التصنيف")
     )
     name = models.CharField(
         max_length=150,
@@ -52,7 +52,7 @@ class Product(models.Model):
     )
     stock = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("الكمية المتاحة في المخزون")
+        verbose_name=_("الكمية المتاحة")
     )
     image = models.ImageField(
         upload_to='products/',
@@ -71,7 +71,7 @@ class Product(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class ProductImage(models.Model):
@@ -94,13 +94,21 @@ class ProductImage(models.Model):
     )
     uploaded_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name=_("تاريخ رفع الصورة")
+        verbose_name=_("تاريخ الرفع")
     )
 
     class Meta:
-        verbose_name = _("صورة منتج")
+        verbose_name = _("صورة المنتج")
         verbose_name_plural = _("معرض الصور الإضافية")
         ordering = ['-uploaded_at']
 
     def __str__(self):
-        return f"صورة {self.product.name}"
+        return f"📸 {self.product.name}"
+
+    def image_preview(self):
+        """عرض مصغّر للصورة في لوحة التحكم"""
+        from django.utils.html import mark_safe
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" width="80" style="border-radius:8px;" />')
+        return _("لا توجد صورة")
+    image_preview.short_description = _("معاينة الصورة")
