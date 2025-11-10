@@ -1,9 +1,11 @@
 from pathlib import Path
+import os
 
 # ===========================
 # المسارات الأساسية
 # ===========================
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # ===========================
 # مفاتيح الأمان والإعدادات العامة
@@ -17,6 +19,7 @@ ALLOWED_HOSTS = []
 # التطبيقات المثبتة
 # ===========================
 INSTALLED_APPS = [
+    # تطبيقات Django الافتراضية
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,8 +56,7 @@ ROOT_URLCONF = 'hamad12.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 👇 هنا التعريف على مجلد القوالب الرئيسي
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # 👈 مجلد القوالب الرئيسي
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,16 +106,23 @@ USE_TZ = True
 # ===========================
 # الملفات الثابتة (Static Files)
 # ===========================
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-# 👇 لتحديد مكان ملفات static في المشروع لاحقاً
-STATICFILES_DIRS = [BASE_DIR / 'static']
+# مجلد الملفات الثابتة داخل المشروع
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',   # ملفاتك أثناء التطوير
+]
+
+# المجلد الذي تُجمع فيه الملفات عند تشغيل collectstatic
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # ===========================
-# الملفات الإعلامية (الصور، المرفقات)
+# الملفات الإعلامية (Media Files)
 # ===========================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # ===========================
 # الإعداد الافتراضي للحقول
