@@ -1,12 +1,16 @@
 from django.urls import path
-
-# ملف المسارات لتطبيق core
-urlpatterns = [
-
-]
-from django.urls import path
 from . import views
 
+# ==============================
+# 🌐 روابط تطبيق core
+# ==============================
 urlpatterns = [
-    path('', views.home, name='home'),  # الصفحة الرئيسية
+    # 🏠 الصفحة الرئيسية
+    path('', views.home, name='home'),
+
+    # 🟢 إنشاء حساب جديد
+    path('register/', views.register_view, name='register'),
+
+    # 🔵 تسجيل الدخول
+    path('login/', views.login_view, name='login'),
 ]
