@@ -3,6 +3,12 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from dotenv import load_dotenv
+
+# ===========================
+# 🔒 تحميل المتغيرات من ملف .env
+# ===========================
+load_dotenv()
 
 # ===========================
 # 🧭 المسارات الأساسية
@@ -13,9 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ===========================
 # 🔐 مفاتيح الأمان والإعدادات العامة
 # ===========================
-SECRET_KEY = 'django-insecure-6#zt7)7o3sh9-k)1g6iq1s0&*e7pfhk*#umd-hoik8vs9o*12^'
-DEBUG = True
-ALLOWED_HOSTS = []
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 
 # ===========================
@@ -80,14 +86,28 @@ WSGI_APPLICATION = 'hamad12.wsgi.application'
 
 
 # ===========================
-# 🗃️ قاعدة البيانات
+# 🗃️ إعداد قاعدة البيانات
 # ===========================
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    # 🧪 قاعدة بيانات التطوير (محلية)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    # 🚀 قاعدة بيانات الإنتاج (PostgreSQL)
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
+    }
 
 
 # ===========================
@@ -127,9 +147,9 @@ STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 # 🌩️ إعدادات Cloudinary
 cloudinary.config(
-    cloud_name='dnvdipjtp',
-    api_key='783998442557899',
-    api_secret='ayR4ieuNGOk3ztqEn1_PfB25bQY',
+    cloud_name=os.getenv('CLOUD_NAME'),
+    api_key=os.getenv('API_KEY'),
+    api_secret=os.getenv('API_SECRET'),
     secure=True
 )
 
