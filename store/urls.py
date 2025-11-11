@@ -1,6 +1,10 @@
 from django.urls import path
+from . import views
 
-# ملف المسارات لتطبيق store
+# =======================================
+# 🛍️ مسارات تطبيق المتجر (store)
+# =======================================
 urlpatterns = [
-
+    # 🏠 صفحة جميع المنتجات
+    path('products/', views.products_view, name='products'),
 ]
