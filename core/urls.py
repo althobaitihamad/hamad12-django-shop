@@ -13,4 +13,7 @@ urlpatterns = [
 
     # 🔵 تسجيل الدخول
     path('login/', views.login_view, name='login'),
+
+    # 🔴 تسجيل الخروج
+    path('logout/', views.logout_view, name='logout'),
 ]

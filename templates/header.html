@@ -1,9 +1,33 @@
 <header style="background-color: #0d6efd; color: white; padding: 15px 0; text-align: center;">
   <h1 style="margin: 0; font-size: 28px;">📱 متجر حمد للجوالات</h1>
+
   <nav style="margin-top: 10px;">
-    <a href="#" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">الرئيسية</a>
+    <a href="{% url 'home' %}" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">الرئيسية</a>
     <a href="#" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">المنتجات</a>
     <a href="#" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">العروض</a>
     <a href="#" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">تواصل معنا</a>
+
+    {% if request.user.is_authenticated %}
+      <!-- ✅ المستخدم داخل الجلسة -->
+      <span style="margin: 0 15px; font-weight: bold;">
+        👋 مرحبًا، {{ request.user.username }}
+      </span>
+
+      <!-- 🔴 زر تسجيل الخروج -->
+      <a href="{% url 'logout' %}" style="background-color: #dc3545; color: white; padding: 6px 15px; border-radius: 6px; margin: 0 5px; text-decoration: none; font-weight: bold;">
+        تسجيل الخروج
+      </a>
+
+    {% else %}
+      <!-- 🔵 زر تسجيل الدخول -->
+      <a href="{% url 'login' %}" style="background-color: white; color: #0d6efd; padding: 6px 15px; border-radius: 6px; margin: 0 5px; text-decoration: none; font-weight: bold;">
+        تسجيل الدخول
+      </a>
+
+      <!-- 🟢 زر إنشاء حساب -->
+      <a href="{% url 'register' %}" style="background-color: #198754; color: white; padding: 6px 15px; border-radius: 6px; margin: 0 5px; text-decoration: none; font-weight: bold;">
+        إنشاء حساب
+      </a>
+    {% endif %}
   </nav>
 </header>
