@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>متجر حمد للجوالات</title>
+  <title>📱 متجر حمد للجوالات</title>
   <style>
     body {
       font-family: "Tajawal", sans-serif;
@@ -12,86 +12,55 @@
       color: #212529;
     }
 
-    .container {
-      width: 90%;
-      margin: 30px auto;
-      text-align: center;
-    }
-
-    .product {
-      display: inline-block;
-      width: 250px;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      margin: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .product:hover {
-      transform: translateY(-5px);
-    }
-
-    .product img {
-      width: 100%;
-      border-radius: 12px 12px 0 0;
-    }
-
-    .product h3 {
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
-    .product p {
-      color: #0d6efd;
-      font-weight: bold;
-    }
-
-    .btn {
-      background-color: #0d6efd;
+    .banner {
+      background: linear-gradient(135deg, #0d6efd, #084298);
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      text-align: center;
+      padding: 60px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .banner h1 {
+      font-size: 36px;
       margin-bottom: 10px;
     }
 
-    .btn:hover {
-      background-color: #084298;
+    .banner p {
+      font-size: 18px;
+      color: #e0e0e0;
+    }
+
+    .container {
+      width: 90%;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    h2.section-title {
+      font-size: 26px;
+      margin-bottom: 25px;
+      color: #0d6efd;
     }
   </style>
 </head>
 <body>
 
-  <!-- استدعاء الهيدر -->
+  <!-- 🧭 الشريط العلوي -->
   {% include 'header.html' %}
 
-  <div class="container">
-    <h2>أحدث الجوالات</h2>
-    <div class="product">
-      <img src="https://via.placeholder.com/250x200?text=iPhone+15" alt="iPhone 15">
-      <h3>iPhone 15</h3>
-      <p>4,999 ريال</p>
-      <button class="btn">أضف إلى السلة</button>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/250x200?text=Samsung+S24" alt="Samsung S24">
-      <h3>Samsung S24</h3>
-      <p>3,999 ريال</p>
-      <button class="btn">أضف إلى السلة</button>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/250x200?text=Xiaomi+13" alt="Xiaomi 13">
-      <h3>Xiaomi 13</h3>
-      <p>2,499 ريال</p>
-      <button class="btn">أضف إلى السلة</button>
-    </div>
+  <!-- 🎯 البنر الرئيسي -->
+  <div class="banner">
+    <h1>مرحبًا بكم في متجر حمد للجوالات 📱</h1>
+    <p>أفضل الأسعار والعروض على أحدث الجوالات</p>
   </div>
 
-  <!-- استدعاء الفوتر -->
+  <!-- 🛍️ قسم المنتجات -->
+  <div class="container">
+    <h2 class="section-title">📦 أحدث المنتجات</h2>
+    {% include 'store_templates/products.html' %}
+  </div>
+
+  <!-- ⚙️ الشريط السفلي -->
   {% include 'footer.html' %}
 
   <script>
