@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # ===========================
 # 🧭 المسارات الأساسية
@@ -12,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ===========================
 SECRET_KEY = 'django-insecure-6#zt7)7o3sh9-k)1g6iq1s0&*e7pfhk*#umd-hoik8vs9o*12^'
 DEBUG = True
-ALLOWED_HOSTS = []  # عند النشر أضف الدومين هنا
+ALLOWED_HOSTS = []
 
 
 # ===========================
@@ -31,6 +34,10 @@ INSTALLED_APPS = [
     'core',
     'store',
     'orders',
+
+    # 🌩️ مكتبة Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 
@@ -49,14 +56,14 @@ MIDDLEWARE = [
 
 
 # ===========================
-# 🌐 إعدادات العناوين والقوالب
+# 🌐 إعدادات القوالب
 # ===========================
 ROOT_URLCONF = 'hamad12.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # مجلد القوالب الرئيسي
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,24 +111,27 @@ USE_TZ = True
 
 
 # ===========================
-# 🎨 الملفات الثابتة (Static Files)
+# 🎨 الملفات الثابتة
 # ===========================
 STATIC_URL = '/static/'
-
-# ملفاتك أثناء التطوير
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-
-# المجلد الذي تُجمع فيه الملفات عند تنفيذ collectstatic (يُستخدم في النشر)
+STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # ===========================
-# 🖼️ الملفات الإعلامية (Media Files)
+# 🖼️ الملفات الإعلامية (Cloudinary)
 # ===========================
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+# 🌩️ إعدادات Cloudinary
+cloudinary.config(
+    cloud_name='dnvdipjtp',
+    api_key='783998442557899',
+    api_secret='ayR4ieuNGOk3ztqEn1_PfB25bQY',
+    secure=True
+)
 
 
 # ===========================
