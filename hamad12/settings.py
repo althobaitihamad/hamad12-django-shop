@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ===========================
 # 🔐 مفاتيح الأمان والإعدادات العامة
 # ===========================
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
@@ -60,12 +60,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+ROOT_URLCONF = 'hamad12.urls'
+
 
 # ===========================
 # 🌐 إعدادات القوالب
 # ===========================
-ROOT_URLCONF = 'hamad12.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -131,19 +131,16 @@ USE_TZ = True
 
 
 # ===========================
-# 🎨 الملفات الثابتة
+# 🎨 الملفات الثابتة والإعلامية
 # ===========================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-
-# ===========================
-# 🖼️ الملفات الإعلامية (Cloudinary)
-# ===========================
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
 
 # 🌩️ إعدادات Cloudinary
 cloudinary.config(
@@ -153,6 +150,25 @@ cloudinary.config(
     secure=True
 )
 
+
+# ===========================
+# 🔒 إعدادات الأمان للإنتاج
+# ===========================
+if not DEBUG:
+    # فرض HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+
+    # ملفات الكوكيز الآمنة
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # منع تضمين الموقع داخل iframe
+    X_FRAME_OPTIONS = 'DENY'
+
+    # منع تصفح محتوى الملفات
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
 
 # ===========================
 # ⚙️ الإعداد الافتراضي للحقول
